@@ -1,7 +1,7 @@
 const navLinks = [
   {
     name: "Accueil",
-    link: "#work",
+    link: "#hero",
   },
   {
     name: "A propos",
@@ -145,11 +145,35 @@ const techStackIcons = [
     scale: 0.05,
     rotation: [0, -Math.PI / 4, 0],
   },
+  // Skills 2D (icônes depuis projets + public/assets)
+  { name: "TypeScript", imgPath: "/assets/typescript.png" },
+  { name: "Next.js", imgPath: "/assets/nextjs.png" },
+  { name: "Tailwind CSS", imgPath: "/assets/tailwindcss.png" },
+  { name: "Docker", imgPath: "/assets/docker.png" },
+  { name: "GitLab CI/CD", imgPath: "/assets/gitlab.png" },
+  { name: "Solidity", imgPath: "/assets/solidity.png" },
+  { name: "Figma", imgPath: "/assets/figma.svg" },
+  { name: "SCSS", imgPath: "/assets/scss.png" },
+  { name: "Framer Motion", imgPath: "/assets/framer.png" },
+  { name: "JavaScript", imgPath: "/assets/js.png" },
+  { name: "Hardhat", imgPath: "/assets/hardhat.png" },
+  { name: "Ethers.js", imgPath: "/assets/ethers.png" },
+  { name: "Grafana", imgPath: "/assets/grafana.png" },
+  { name: "Prometheus", imgPath: "/assets/prometheus.png" },
+  { name: "Linux", imgPath: "/assets/linux.png" },
+  { name: "Portainer", imgPath: "/assets/portainer.png" },
+];
+
+const PROJECT_CATEGORIES = [
+  { id: 'development', label: 'Développement' },
+  { id: 'devops', label: 'DevOps' },
+  { id: 'games', label: 'Jeux' },
 ];
 
 const myProjects = [
   {
     title: 'Pornjourney - AI Platform',
+    category: 'development',
     visibility: 'public',
     externalLink: true,
     desc: 'Pornjourney est une plateforme de Software-as-a-Service qui transforme la façon dont le contenu sexuel est créé. Avec des fonctionnalités avancées alimentées par l\'IA.',
@@ -195,6 +219,7 @@ const myProjects = [
   },
   {
     title: 'Cdiscount marketplace - Frontend',
+    category: 'development',
     visibility: 'public',
     externalLink: false,
     desc: 'Participation au développement du frontend d\'une marketplace de vente de produits en ligne avec JavaScript, Nunjucks, SCSS.',
@@ -235,6 +260,7 @@ const myProjects = [
   },
   {
     title: 'Plateforme d\'échange de cryptomonnaie - Frontend',
+    category: 'development',
     visibility: 'private',
     desc: 'Plateforme permettant l\'échange d\'une cryptomonnaie en ethereum et inversement en utilisant les fonctionnalités du contrat intelligent développé en solidity.',
     subdesc:
@@ -292,7 +318,112 @@ const myProjects = [
         path: '/assets/nextjs.png',
       },
     ],
-  }
+  },
+  {
+    title: 'Mise en place de pipeline CI/CD',
+    category: 'devops',
+    visibility: 'public',
+    showLogo: false,
+    externalLink: false,
+    desc: 'Réalisation d\'une pipeline CI/CD pour une application web Next.js avec Gitlab CI/CD, Docker, Harbor et Make.',
+    subdesc:
+      'L\'objectif était de mise en place une pipeline CI/CD avec plusieurs environnements (development, staging, production) afin de faciliter le développement et le déploiement de l\'application. La gestion des images Docker a été réalisée avec Harbor et Hadolint a été utilisé pour la validation des images Docker.',
+    logo: '/assets/project-logo3.png',
+    logoStyle: {
+      backgroundColor: '#60f5a1',
+      background:
+        'linear-gradient(0deg, #60F5A150, #60F5A150), linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(208, 213, 221, 0.8) 100%)',
+      border: '0.2px solid rgba(208, 213, 221, 1)',
+      boxShadow: '0px 0px 60px 0px rgba(35, 131, 96, 0.3)',
+    },
+    texture: '/textures/project/devops1.mp4',
+    spotlight: '/assets/spotlight2.png',
+    tags: [
+      {
+        id: 1,
+        name: 'Gitlab',
+        path: '/assets/gitlab.png',
+      },
+      {
+        id: 2,
+        name: 'Docker',
+        path: '/assets/docker.png',
+      },
+      {
+        id: 3,
+        name: 'Next.js',
+        path: '/assets/nextjs.png',
+      },
+    ],
+  },
+  {
+    title: 'Supervision & Alerte',
+    category: 'devops',
+    visibility: 'public',
+    showLogo: false,
+    externalLink: false,
+    desc: 'Supervision & Alerte de serveurs avec Prometheus, Grafana, Alertmanager & Telegramm.',
+    subdesc:
+      'L\'objectif était de mise en place une supervision et une alerte de serveurs avec Prometheus, Grafana qui permettent via nodeExporter ainsi que cAdvisor de surveiller et d\'alerter via le canal telegramm si certaines métriques sont en dehors de la norme.',
+    texture: '/textures/project/devops2.mp4',
+    spotlight: '/assets/spotlight2.png',
+    tags: [
+      {
+        id: 1,
+        name: 'Gitlab',
+        path: '/assets/gitlab.png',
+      },
+      {
+        id: 2,
+        name: 'Grafana',
+        path: '/assets/grafana.png',
+      },
+      {
+        id: 3,
+        name: 'Prometheus',
+        path: '/assets/prometheus.png',
+      },
+      {
+        id: 4,
+        name: 'Telegramm',
+        path: '/assets/telegramm.png',
+      },
+      {
+        id: 5,
+        name: 'Cadvisor',
+        path: '/assets/cadvisor.png',
+      },
+    ],
+  },
+  {
+    title: 'Serveur d\'administration - Docker',
+    category: 'devops',
+    visibility: 'public',
+    showLogo: false,
+    externalLink: false,
+    desc:
+      'L\'objectif était de mise en place un serveur d\'administration pour les resources docker afin de faciliter la gestion des containers et des images.',
+    subdesc: 'La création du serveur a été réalisée en utilisant une distribution linux sur laquelle on a installé l\'outil portainer afin de faciliter la gestion des containers et des images répartis sur différents serveurs, l\'utilisation de Harbor nosu a permis de pouvoir centraliser les images afin de pouvoir les partager entre les différents serveurs.',
+    texture: '/textures/project/devops3.mp4',
+    spotlight: '/assets/spotlight2.png',
+    tags: [
+      {
+        id: 1,
+        name: 'Linux',
+        path: '/assets/linux.png',
+      },
+      {
+        id: 2,
+        name: 'Docker',
+        path: '/assets/docker.png',
+      },
+      {
+        id: 3,
+        name: 'Portainer',
+        path: '/assets/portainer.png',
+      }
+    ],
+  },
 ];
 
 const expCards = [
@@ -396,18 +527,6 @@ const testimonials = [
 
 const socialImgs = [
   {
-    name: "insta",
-    imgPath: "/images/insta.png",
-  },
-  {
-    name: "fb",
-    imgPath: "/images/fb.png",
-  },
-  {
-    name: "x",
-    imgPath: "/images/x.png",
-  },
-  {
     name: "linkedin",
     imgPath: "/images/linkedin.png",
   },
@@ -425,5 +544,6 @@ export {
   techStackIcons,
   techStackImgs,
   myProjects,
+  PROJECT_CATEGORIES,
   navLinks,
 };

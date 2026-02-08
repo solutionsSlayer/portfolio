@@ -1,17 +1,29 @@
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { Suspense, useState } from 'react';
+import { Suspense, useState, useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Center, OrbitControls } from '@react-three/drei';
 
-import { myProjects } from '../constants/index.js';
+import { myProjects, PROJECT_CATEGORIES } from '../constants/index.js';
 import CanvasLoader from '../components/Loading.jsx';
 import DemoComputer from '../components/DemoComputer.jsx';
 
-const projectCount = myProjects.length;
-
 const Projects = () => {
+  const [selectedCategory, setSelectedCategory] = useState(PROJECT_CATEGORIES[0].id);
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
+
+  const filteredProjects = useMemo(
+    () => myProjects.filter((p) => (p.category ?? 'development') === selectedCategory),
+    [selectedCategory]
+  );
+
+  const projectCount = filteredProjects.length;
+  const currentProject = filteredProjects[selectedProjectIndex];
+
+  const handleCategoryChange = (categoryId) => {
+    setSelectedCategory(categoryId);
+    setSelectedProjectIndex(0);
+  };
 
   const handleNavigation = (direction) => {
     setSelectedProjectIndex((prevIndex) => {
@@ -25,14 +37,31 @@ const Projects = () => {
 
   useGSAP(() => {
     gsap.fromTo(`.animatedText`, { opacity: 0 }, { opacity: 1, duration: 1, stagger: 0.2, ease: 'power2.inOut' });
-  }, [selectedProjectIndex]);
-
-  const currentProject = myProjects[selectedProjectIndex];
+  }, [selectedProjectIndex, currentProject]);
 
   return (
-    <section className="c-space my-20">
+    <section id="projects" className="c-space my-20">
       <p className="head-text">Mes Projets</p>
 
+      <nav className="flex flex-wrap gap-2 mt-4 mb-2" aria-label="Catégories de projets">
+        {PROJECT_CATEGORIES.map((cat) => (
+          <button
+            key={cat.id}
+            type="button"
+            onClick={() => handleCategoryChange(cat.id)}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              selectedCategory === cat.id
+                ? 'bg-white/15 text-white border border-white/30'
+                : 'bg-white/5 text-white/70 border border-white/10 hover:bg-white/10 hover:text-white/90'
+            }`}>
+            {cat.label}
+          </button>
+        ))}
+      </nav>
+
+      {projectCount === 0 ? (
+        <p className="text-white/60 mt-8">Aucun projet dans cette catégorie pour le moment.</p>
+      ) : (
       <div className="grid lg:grid-cols-2 grid-cols-1 mt-12 gap-5 w-full">
         <div className="flex flex-col gap-5 relative sm:p-10 py-10 px-5 shadow-2xl shadow-black-200">
           <div className="absolute top-4 right-4 z-10 flex gap-2">
@@ -49,7 +78,7 @@ const Projects = () => {
             <img src={currentProject.spotlight} alt="spotlight" className="w-full h-96 object-cover rounded-xl" />
           </div>
 
-          {(currentProject.visibility ?? 'public') !== 'private' && (
+          {(currentProject.visibility ?? 'public') !== 'private' && currentProject.showLogo !== false && (
             <div className="p-3 backdrop-filter backdrop-blur-3xl w-fit rounded-lg" style={currentProject.logoStyle}>
               <img className="w-full h-10 shadow-sm" src={currentProject.logo} alt="logo" />
             </div>
@@ -114,6 +143,7 @@ const Projects = () => {
           </Canvas>
         </div>
       </div>
+      )}
     </section>
   );
 };

@@ -23,6 +23,14 @@ section {
   width: 100dvw;
 }
 
+#hero,
+#about,
+#projects,
+#skills,
+#contact {
+  scroll-margin-top: 5rem;
+}
+
 @layer utilities {
   /* ===== Nouveaux utilitaires ===== */
   .flex-center {
@@ -229,11 +237,11 @@ section {
   }
 
   .hero-badge {
-    @apply bg-black-200 py-2 px-4 rounded-full w-fit text-sm md:text-base whitespace-nowrap;
+    @apply bg-black-200 py-2 px-4 rounded-full w-fit text-sm md:text-base whitespace-normal md:whitespace-nowrap text-center max-w-[95vw] md:max-w-none;
   }
 
   .hero-3d-layout {
-    @apply xl:w-[70%] w-full h-full min-h-[50vh] absolute xl:-top-20 top-24 xl:right-[-10%] right-20;
+    @apply xl:w-[70%] w-full h-full min-h-[50vh] absolute xl:-top-20 top-24 xl:right-[-10%] right-auto left-1/2 xl:left-auto -translate-x-1/2 xl:translate-x-0;
   }
 
   .navbar {
@@ -341,19 +349,22 @@ section {
   }
 
   .cta-button {
-    @apply px-4 py-4 rounded-lg bg-black-200 flex justify-center items-center relative cursor-pointer overflow-hidden;
+    @apply px-4 py-4 rounded-lg bg-black-200 flex justify-center items-center relative cursor-pointer overflow-hidden min-h-[48px];
   }
 
   .cta-button .bg-circle {
     @apply absolute -right-10 origin-center top-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full bg-white-50 transition-all duration-500;
+    @apply hidden md:block;
   }
 
   .cta-button .text {
-    @apply uppercase md:text-lg text-black transition-all duration-500 -translate-x-5 xl:translate-x-0;
+    @apply uppercase text-sm md:text-lg text-black transition-all duration-500 relative z-10;
+    @apply translate-x-0 md:-translate-x-5 xl:translate-x-0;
   }
 
   .cta-button .arrow-wrapper {
-    @apply w-10 h-10 rounded-full absolute right-10 top-1/2 -translate-y-1/2 flex justify-center items-center overflow-hidden;
+    @apply w-10 h-10 rounded-full absolute right-10 top-1/2 -translate-y-1/2 justify-center items-center overflow-hidden;
+    @apply hidden md:flex;
   }
 
   .cta-button .arrow-wrapper img {
@@ -362,6 +373,14 @@ section {
 
   .card-border {
     @apply border border-black-50 bg-black-100;
+  }
+
+  .tech-card-glass {
+    @apply border border-white/20 bg-white/[0.08] backdrop-blur-xl shadow-lg;
+    @apply transition-all duration-300 ease-out;
+  }
+  .tech-card-glass:hover {
+    @apply bg-white/[0.14] border-white/30 shadow-xl shadow-black/20;
   }
 
   .marquee-item {
@@ -388,24 +407,31 @@ section {
     @apply w-36 h-full absolute bottom-0 z-20;
   }
 
-  .tech-card-animated-bg {
-    @apply absolute left-0 bottom-[-100%] w-full h-full bg-[#2D3240] group-hover:bottom-0 transition-all duration-700;
-  }
-
   .tech-card-content {
-    @apply flex flex-col md:justify-center items-center xl:gap-5 xl:h-[50vh] overflow-hidden relative z-10 group-hover:cursor-grab;
+    @apply flex flex-col justify-center items-center gap-4 p-6 h-full min-h-0 overflow-hidden relative z-10;
+    @apply group-hover:cursor-grab;
+    perspective: 800px;
+    transform-style: preserve-3d;
   }
 
   .tech-card-content p {
-    @apply text-lg 2xl:text-2xl pb-5 xl:pb-0 font-semibold text-white-50 text-center;
+    @apply text-base xl:text-lg font-medium text-white/90 text-center leading-tight;
   }
 
   .tech-grid {
-    @apply grid xl:grid-cols-5 md:grid-cols-3 grid-cols-1 xl:gap-16 md:gap-10 gap-5 mt-16;
+    @apply grid xl:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-4 md:gap-6 xl:gap-8 mt-12;
   }
 
   .tech-icon-wrapper {
-    @apply flex justify-center items-center w-52 h-60 relative;
+    @apply flex justify-center items-center w-full flex-1 min-h-0 relative max-h-[60%];
+    @apply transition-transform duration-500 ease-out;
+  }
+  .tech-icon-wrapper canvas,
+  .tech-stack-icon-img {
+    @apply w-16 h-16 md:w-20 md:h-20 xl:w-24 xl:h-24 object-contain flex-shrink-0;
+  }
+  .tech-card-glass:hover .tech-icon-wrapper {
+    transform: rotateY(360deg);
   }
 
   .form-label {
@@ -414,6 +440,10 @@ section {
 
   .form-input {
     @apply w-full px-4 py-4 md:text-base text-sm placeholder:text-blue-50 bg-blue-100 rounded-md;
+  }
+
+  .form-textarea {
+    @apply w-full px-4 py-4 md:text-base text-sm placeholder:text-blue-50 bg-blue-100 rounded-md resize-y min-h-[120px];
   }
 
   .form-link {
