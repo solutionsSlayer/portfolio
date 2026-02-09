@@ -3,6 +3,7 @@ import { useGSAP } from '@gsap/react';
 import { Suspense, useState, useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Center, OrbitControls } from '@react-three/drei';
+import { useMediaQuery } from 'react-responsive';
 
 import { myProjects, PROJECT_CATEGORIES } from '../constants/index.js';
 import CanvasLoader from '../components/Loading.jsx';
@@ -11,6 +12,9 @@ import DemoComputer from '../components/DemoComputer.jsx';
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState(PROJECT_CATEGORIES[0].id);
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+  const isTablet = useMediaQuery({ query: '(max-width: 1024px)' });
+  const computerScale = isMobile ? 1 : isTablet ? 1.5 : 2;
 
   const filteredProjects = useMemo(
     () => myProjects.filter((p) => (p.category ?? 'development') === selectedCategory),
@@ -125,13 +129,13 @@ const Projects = () => {
           </div>
         </div>
 
-        <div className="border border-black-300 bg-black-200 rounded-lg h-96 md:h-full">
+        <div className="border border-black-300 bg-black-200 rounded-lg h-64 sm:h-80 md:h-96 lg:h-full min-h-[16rem]">
           <Canvas>
             <ambientLight intensity={Math.PI} />
             <directionalLight position={[10, 10, 5]} />
             <Center>
               <Suspense fallback={<CanvasLoader />}>
-                <group scale={2} position={[0, -3, 0]} rotation={[0, -0.1, 0]}>
+                <group scale={computerScale} position={[0, -3, 0]} rotation={[0, -0.1, 0]}>
                   <DemoComputer
                   texture={currentProject.texture}
                   isPrivate={(currentProject.visibility ?? 'public') === 'private'}

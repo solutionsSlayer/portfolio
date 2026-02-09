@@ -69,6 +69,37 @@ const Hero = () => {
             <HeroExperience />
           </div>
         </figure>
+
+        {/* Flèche de scroll — positionnée en bas du bloc hero (au-dessus des cartes) */}
+        <a
+          href="#about"
+          aria-label="Défiler vers la section À propos"
+          className="hero-scroll-arrow"
+        >
+          <svg
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-7 h-7 md:w-8 md:h-8"
+            aria-hidden
+          >
+            <path
+              d="M12 5v14M5 12l7 7 7-7"
+              stroke="url(#hero-arrow-gradient)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <defs>
+              <linearGradient id="hero-arrow-gradient" x1="5" y1="5" x2="19" y2="19" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#BEC1CF" />
+                <stop offset="1" stopColor="#D5D8EA" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </a>
       </div>
 
       <AnimatedCounter />
